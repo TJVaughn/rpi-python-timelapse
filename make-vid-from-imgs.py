@@ -1,7 +1,7 @@
 import moviepy.video.io.ImageSequenceClip
 import os
 
-folder_to_read = '2-10-21'
+folder_to_read = 'YOUR_PHOTOS_FILE'
 fps = 24
 folder = os.listdir(f"../inputs/{folder_to_read}")
 
@@ -31,6 +31,6 @@ def sorted_num_vals_to_filenames(arr):
 selection_sort_nums(get_num_vals(folder, '.jpg'))
 sorted_num_vals_to_filenames(folder)
 
-image_files = [folder_to_read+'/'+img for img in folder if img.endswith(".jpg")]
+image_files = ['../inputs/' + folder_to_read+'/'+img for img in folder if img.endswith(".jpg")]
 clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
 clip.write_videofile(f'../movies/timelapse_{folder_to_read}_{fps}fps.mp4')
