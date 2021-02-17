@@ -1,7 +1,7 @@
 import moviepy.video.io.ImageSequenceClip
 import os
 
-folder_to_read = 'YOUR_PHOTOS_FILE'
+folder_to_read = '2-16-21'
 fps = 24
 folder = os.listdir(f"../inputs/{folder_to_read}")
 

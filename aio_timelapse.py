@@ -26,23 +26,23 @@ def selection_sort_nums(arr):
 
 
 def sorted_num_vals_to_filenames(arr):
-	for i in range(0, len(arr)):
-		arr[i] = f"000{str(arr[i])}.jpg"
+    for i in range(0, len(arr)):
+        arr[i] = f"000{str(arr[i])}.jpg"
 #Helper functions ***************************************************************************************************************************
 
-today = date.today()
+today = str(date.today())
 
 #Make new directory with todays date
 os.system(f"cd ./captures && mkdir {today}")
 
 #set length of timelapse
-hours_of_time_lapse = 6
+hours_of_time_lapse = 7.25
 #set output fps
 fps = 24
 
 
 folder_to_read = today
-folder = os.listdir(f"../captures/{folder_to_read}")
+folder = os.listdir(f"./captures/{folder_to_read}")
 
 selection_sort_nums(get_num_vals(folder, '.jpg'))
 sorted_num_vals_to_filenames(folder)
@@ -51,16 +51,18 @@ camera = PiCamera()
 camera.start_preview()
 sleep(5)
 
-#image_files = ['../captures/' + folder_to_read +'/'+img for img in folder if img.endswith(".jpg")]
+image_files = ['./captures/' + folder_to_read +'/'+img for img in folder if img.endswith(".jpg")]
 
-photos_to_take = 6 * 60 * hours_of_time_lapse
+photos_to_take = int(round(6 * 60 * hours_of_time_lapse))
+print(photos_to_take)
 for i in range(1, photos_to_take):
-	camera.capture(f'./captures/{today}/000{i}.jpg')
-	print(f'photo {i} taken')
-	clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(f'./captures/{today}/000{i}.jpg', fps=fps)
-	sleep(10)
+    camera.capture(f'./captures/{today}/000{i}.jpg')
+    print(f'photo {i} taken')
+    if(i > 1):
+        clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
+    sleep(10)
 
 camera.stop_preview()
 
 
-clip.write_videofile(f'../movies/timelapse_{folder_to_read}_{fps}fps.mp4')
+clip.write_videofile(f'./movies/timelapse_{folder_to_read}_{fps}fps.mp4')
